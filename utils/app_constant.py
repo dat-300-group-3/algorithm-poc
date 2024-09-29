@@ -1,0 +1,2 @@
+INPUT_CHANNEL = "INPUT_STREAM_DATA"
+INPUT_FILE = "data/sorted_file.csv"
