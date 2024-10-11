@@ -1,45 +1,53 @@
-import redis
-import time
-import csv
-from datetime import date
+import matplotlib.pyplot as plt
+from app_default import AppRedisClient
 
 
-# Connect to Redis
-r = redis.Redis()
+class YourClass:
+    def __init__(self) -> None:
+        self.redis_client = AppRedisClient().get_connection()
 
-def is_allowed(row):
-    today = date.today()
+    def plot_cms_data(self, period):
+        # Retrieve all unique elements from the Redis Set
+        values = self.redis_client.smembers(f"ulookup:{period}")
 
-    current_time = int(time.time())
-    print("Date:",today)
-    key = f"rate_limit:{today}"  # Generate a Redis key
-    
-    pipe = r.pipeline()
-    
-    #window size is one hour
-    pipe.zremrangebyscore(key, 0, current_time - 3600)
-    pipe.zadd(key, {"%d-%s-%s-%s" %(current_time, row['ip'], row['device'], row['channel']): current_time})
-    pipe.zcard(key)
-    #expire in one minute
-    pipe.expire(key, 60)
-    
-    # Execute the pipeline
-    action_countv = pipe.execute()
-    print(action_countv)
-    action_count = action_countv[2]
+        # Initialize lists to store the elements and their corresponding counts
+        elements = []
+        counts = []
 
-    limit = 5
+        # Iterate through each element, query its count from the Count-Min Sketch
+        for it in values:
+            # Convert byte response to string (since smembers returns bytes)
+            element = it  # Redis typically returns bytes, so decode it
 
-    # Check if the user has exceeded the limit
-    if action_count <= limit:
-        return True  # Action is allowed
-    else:
-        return False  # Rate limit exceeded
+            # Query the count for each element
+            val = self.redis_client.cms().query(f"cms:{period}", element)
 
-with open('data/sorted_file.csv', 'r') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in reader:
-                if is_allowed(row):
-                     print("Action allowed")
-                else:
-                    print("Rate limit exceeded")
+            # Store the element and its count in respective lists
+            elements.append(element)
+            counts.append(val[0])  # `val` is returned as a list, so access the count with val[0]
+
+        # Plot the elements vs. counts
+        self.create_plot(elements, counts)
+
+    def create_plot(self, elements, counts):
+        # Create a bar plot
+        plt.figure(figsize=(10, 6))
+        plt.bar(elements, counts, color='skyblue')
+
+        # Set the title and labels
+        plt.title('Count-Min Sketch Data Plot')
+        plt.xlabel('Elements')
+        plt.ylabel('Counts')
+
+        # Rotate X-axis labels for better readability (optional)
+        plt.xticks(rotation=45, ha='right')
+
+        # Show the plot
+        plt.tight_layout()
+        plt.show()
+
+# Usage
+your_instance = YourClass()
+
+# Plot the entire dataset at once without chunking
+your_instance.plot_cms_data('2017-11-06:15')

@@ -1,0 +1,53 @@
+total click event by date (using dask):
+1. train_sample.csv
+2017-11-06     5011
+2017-11-07    32393
+2017-11-08    34035
+2017-11-09    28561
+
+Total> 100000
+
+2. train.csv
+2017-11-06     9308568
+2017-11-07    59633310
+2017-11-08    62945075
+2017-11-09    53016937
+
+Total> 184903890
+
+-------------------------------------------
+click count by is is_attributed
+
+1. train_sample.csv
+is_attributed      0   1
+date                    
+2017-11-06      5003   8
+2017-11-07     32316  77
+2017-11-08     33952  83
+2017-11-09     28502  59
+
+2. train.csv
+is_attributed         0       1
+date                           
+2017-11-06      9291174   17394
+2017-11-07     59481146  152164
+2017-11-08     62791754  153321
+2017-11-09     52882970  133967
+
+-----------------------------------------------
+duplicate found complete data set with bloom filter
+
+1. train_sample.csv
+
+with hyperloglog:
+duplicate:2017-11-06:12 . count: 111
+duplicate:2017-11-07:00 . count: 706
+duplicate:2017-11-07:12 . count: 668
+duplicate:2017-11-08:00 . count: 787
+duplicate:2017-11-08:12 . count: 668
+duplicate:2017-11-09:00 . count: 836
+duplicate:2017-11-09:12 . count: 316
+
+2. train.csv
+
+----------------------------------------------
