@@ -1,0 +1,46 @@
+Realcount
+df_threshold: 33.0 (percentile = 31)
+threshold_verified: 6.0
+Percentile threshold:  6.0
+
+Users above df_threshold threshold:  319 #frequency anomalies
+#Users above rule-based thresholds:  1808
+Total #Users above thresholds:  2127
+Total #Users:  22178196
+Percentage of users above thresholds:  0.009590500507796034 %
+________________________________________________________________________
+
+w100000_10d
+df_threshold: 486.0
+threshold_verified: 722.0
+Percentile threshold:  533.0
+
+#Users above df_threshold threshold:  916112 #frequency anomalies
+#Users above rule-based thresholds:  3517
+Total #Users above thresholds:  919629
+Total #Users:  22155756
+Percentage of users above thresholds:  4.150745296165927 %
+________________________________________________________________________
+
+w1000000_10d
+df_threshold: 176.0
+threshold_verified: 91.0
+Percentile threshold:  86.0
+
+#Users above df_threshold threshold:  6841 #frequency anomalies
+#Users above rule-based thresholds:  13894
+Total #Users above thresholds:  20735
+Total #Users:  22155756
+Percentage of users above thresholds:  0.09358741809577611 %
+________________________________________________________________________
+
+w59M_5d
+df_threshold: 84.0
+threshold_verified: 9.0
+Percentile threshold:  59.0
+
+#Users above df_threshold threshold:  20835 #frequency anomalies
+#Users above rule-based thresholds:  15159
+Total #Users above thresholds:  35994
+Total #Users:  22294506
+Percentage of users above thresholds:  0.1614478472857842 %
