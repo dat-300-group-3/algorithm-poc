@@ -1,0 +1,14 @@
+data/
+data_realcount/
+graphs*/
+histograms/
+identifiers/
+input/
+metrics/
+stage4*/
+stage23*/
+test/
+*.txt
+*.png
+*.csv
+utils/
